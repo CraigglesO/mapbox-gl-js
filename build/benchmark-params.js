@@ -81,7 +81,7 @@ const repo = 'mapbox-gl-js';
             "gl-js-old": mergeBase,
             "gl-js-new": process.env['CIRCLE_SHA1']
         },
-        branch: "main"
+        branch: "args"
     });
     console.log(params);
 
