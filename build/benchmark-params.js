@@ -28,7 +28,7 @@ const repo = 'mapbox-gl-js';
 (async () => {
 
     const message = execSync(`git log --pretty="%B" -1`).toString()
-    const matches = message.match(/\[benchmap-js.*?\]/);
+    const matches = message.match(/\[benchmap-js(.*?)\]/);
     const runBenchmarks = matches && matches[0];
     if (!runBenchmarks) return;
 
@@ -77,6 +77,7 @@ const repo = 'mapbox-gl-js';
 
     const params = JSON.stringify({
         parameters: {
+            "args": matches[1] || "",
             "gl-js-old": mergeBase,
             "gl-js-new": process.env['CIRCLE_SHA1']
         },
@@ -84,6 +85,6 @@ const repo = 'mapbox-gl-js';
     });
     console.log(params);
 
-    const post = execSync(`curl -X POST --header "Content-Type: application/json" -H "Circle-Token: ${process.env['WEB_METRICS_TOKEN']}" -d '{${params}}' https://circleci.com/api/v2/project/github/mapbox/benchmap-js/pipeline`).toSring();
+    const post = execSync(`curl -X POST --header "Content-Type: application/json" -H "Circle-Token: ${process.env['WEB_METRICS_TOKEN']}" -d '${params}' https://circleci.com/api/v2/project/github/mapbox/benchmap-js/pipeline`).toString();
     console.log(post);
 })();
