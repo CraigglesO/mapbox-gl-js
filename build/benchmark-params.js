@@ -10,6 +10,7 @@ const zlib = require('zlib');
 process.on('unhandledRejection', error => {
     // don't log `error` directly, because errors from child_process.execSync
     // contain an (undocumented) `envPairs` with environment variable values
+    // //
     console.log(error.message || 'Error');
     process.exit(1)
 });
